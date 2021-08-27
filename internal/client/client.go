@@ -14,12 +14,14 @@ import (
 )
 
 type Client struct {
-	laddr    string
-	server   string
-	ctx      context.Context
-	log      *logrus.Logger
-	cancel   context.CancelFunc
-	connlist *_cache.Cache
+	laddr      string
+	server     string
+	ServerPort int
+	conn       conn.Conn
+	ctx        context.Context
+	log        *logrus.Logger
+	cancel     context.CancelFunc
+	connlist   *_cache.Cache
 }
 
 func NewClient(laddr, server string) *Client {
@@ -30,13 +32,14 @@ func NewClient(laddr, server string) *Client {
 	})
 	log.SetOutput(os.Stdout)
 	ctx, cancel := context.WithCancel(context.Background())
-	return &Client{laddr, server, ctx, log, cancel, _cache.New(_cache.NoExpiration, _cache.NoExpiration)}
+	return &Client{laddr, server, 0, nil, ctx, log, cancel, _cache.New(_cache.NoExpiration, _cache.NoExpiration)}
 }
 
-func (c *Client) Run() error {
+func (c *Client) Run(ch chan bool) error {
 	if conn, err := conn.NewConn("tcp"); err != nil {
 		return err
 	} else {
+		c.conn = conn
 		if sc, err := conn.Dial(c.server); err != nil {
 			return err
 		} else {
@@ -45,13 +48,21 @@ func (c *Client) Run() error {
 				c.log.Warn("send request data error")
 				return err
 			}
-			go c.handleServerData(sc)
+			go c.handleServerData(sc, ch)
 		}
 	}
 	return nil
 }
 
-func (c *Client) handleServerData(sc conn.Conn) {
+func (c *Client) Close() error {
+	c.cancel()
+	if err := c.conn.Close(); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) handleServerData(sc conn.Conn, ch chan bool) {
 	defer c.cancel()
 	for {
 		payload, err := utils.DecodeReceive(sc)
@@ -63,12 +74,14 @@ func (c *Client) handleServerData(sc conn.Conn) {
 		case 1:
 			if payload[1] == 0 {
 				c.log.Warn("server bind port error")
+				ch <- false
 				return
 			} else {
-				rp := utils.BytesToInt(payload[2:])
+				c.ServerPort = utils.BytesToInt(payload[2:])
+				ch <- true
 				c.log.Info("connect successful")
 				c.log.Info("clientAddr: " + c.laddr)
-				c.log.Info("serverAddr: " + strings.Split(c.server, ":")[0] + ":" + strconv.Itoa(rp))
+				c.log.Info("serverAddr: " + strings.Split(c.server, ":")[0] + ":" + strconv.Itoa(c.ServerPort))
 			}
 		case 2:
 			cid := payload[1:13]
