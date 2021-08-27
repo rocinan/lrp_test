@@ -15,7 +15,7 @@ import (
 var log *logrus.Logger
 
 func init() {
-	log := logrus.New()
+	log = logrus.New()
 	log.SetFormatter(&nested.Formatter{
 		HideKeys:    true,
 		FieldsOrder: []string{"component", "category"},
