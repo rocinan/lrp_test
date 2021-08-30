@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"lrp"
 	"os"
 	"os/signal"
@@ -26,7 +25,7 @@ func init() {
 func main() {
 	var pcs []*lrp.ProxyClient
 	handleAdd := func(pc *lrp.ProxyClient) bool {
-		fmt.Println("proxy client connected: ", pc.SiteId)
+		log.Info("proxy client connected: ", pc.SiteId)
 		pcs = append(pcs, pc)
 		go func() {
 			testOpenProxy(pc)

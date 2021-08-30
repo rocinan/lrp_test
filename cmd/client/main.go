@@ -24,7 +24,7 @@ func init() {
 func main() {
 	siteId := "LZX081f7108d927"
 
-	lc := lrp.NewLrpc(log, "192.168.3.140", "127.0.0.1:80", ":8805", ":8806")
+	lc := lrp.NewLrpc(log, "192.168.3.140", "127.0.0.1:22", ":8805", ":8806")
 	if ok := lc.Run(siteId); !ok {
 		return
 	}
