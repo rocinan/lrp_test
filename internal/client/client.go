@@ -2,11 +2,12 @@ package client
 
 import (
 	"context"
-	"lrp/internal/conn"
-	"lrp/internal/utils"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/lev2048/lrp/internal/conn"
+	"github.com/lev2048/lrp/internal/utils"
 
 	nested "github.com/antonfisher/nested-logrus-formatter"
 	_cache "github.com/patrickmn/go-cache"

@@ -1,10 +1,11 @@
 package main
 
 import (
-	"lrp"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/lev2048/lrp"
 
 	nested "github.com/antonfisher/nested-logrus-formatter"
 	"github.com/sirupsen/logrus"

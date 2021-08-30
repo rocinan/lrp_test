@@ -3,11 +3,12 @@ package server
 import (
 	"context"
 	"errors"
-	"lrp/internal/conn"
-	"lrp/internal/utils"
 	"net"
 	"strconv"
 	"strings"
+
+	"github.com/lev2048/lrp/internal/conn"
+	"github.com/lev2048/lrp/internal/utils"
 
 	"github.com/sirupsen/logrus"
 )

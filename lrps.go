@@ -5,9 +5,10 @@ import (
 	"context"
 	"encoding/binary"
 	"io"
-	"lrp/internal/server"
 	"net"
 	"unsafe"
+
+	"github.com/lev2048/lrp/internal/server"
 
 	"github.com/sirupsen/logrus"
 )

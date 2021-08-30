@@ -2,9 +2,10 @@ package client
 
 import (
 	"context"
-	"lrp/internal/conn"
-	"lrp/internal/utils"
 	"net"
+
+	"github.com/lev2048/lrp/internal/conn"
+	"github.com/lev2048/lrp/internal/utils"
 
 	"github.com/sirupsen/logrus"
 )

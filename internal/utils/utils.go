@@ -5,9 +5,10 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
-	"lrp/internal/conn"
 	"net"
 	"unsafe"
+
+	"github.com/lev2048/lrp/internal/conn"
 )
 
 //Str2Bytes string转byte 通过修改结构避免拷贝

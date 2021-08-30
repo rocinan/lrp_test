@@ -3,10 +3,11 @@ package lrp
 import (
 	"bytes"
 	"encoding/binary"
-	"lrp/internal/client"
 	"net"
 	"time"
 	"unsafe"
+
+	"github.com/lev2048/lrp/internal/client"
 
 	"github.com/sirupsen/logrus"
 )

@@ -2,9 +2,11 @@ package server
 
 import (
 	"context"
-	"lrp/internal/conn"
-	"lrp/internal/utils"
 	"net"
+
+	"github.com/lev2048/lrp/internal/utils"
+
+	"github.com/lev2048/lrp/internal/conn"
 
 	_cache "github.com/patrickmn/go-cache"
 	"github.com/rs/xid"
