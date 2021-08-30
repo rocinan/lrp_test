@@ -1,4 +1,4 @@
-module lrp
+module github.com/lev2048/lrp
 
 go 1.15
 
